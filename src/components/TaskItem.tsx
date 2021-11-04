@@ -62,77 +62,60 @@ export function TaskItem({
     }, [editing]);
 
     return (
-        <>
-            <View>
-                <TouchableOpacity
-                    testID={`button-${index}`}
-                    activeOpacity={0.7}
-                    style={styles.taskButton}
-                    onPress={() => toggleTaskDone(task.id)}
+        <View style={styles.container}>
+
+            <TouchableOpacity
+                testID={`button-${index}`}
+                activeOpacity={0.7}
+                style={styles.taskButton}
+                onPress={() => toggleTaskDone(task.id)}
+            >
+                <View
+                    testID={`marker-${index}`}
+                    style={task.done ? styles.taskMarkerDone : styles.taskMarker}
                 >
-                    <View
-                        testID={`marker-${index}`}
-                        style={task.done ? styles.taskMarkerDone : styles.taskMarker}
-                    >
-                        {task.done && (
-                            <Icon
-                                name="check"
-                                size={12}
-                                color="#FFF"
-                            />
-                        )}
-                    </View>
+                    {task.done && (<Icon name="check" size={12} color="#FFF" />)}
+                </View>
 
-                    <View style={{
-                        flexGrow: 1,
-                    }}>
-                        <TextInput
-                            value={editedTitle}
-                            onChangeText={setEditedTitle}
-                            editable={editing}
-                            onSubmitEditing={handleSubmitEditing}
-                            style={task.done ? styles.taskTextDone : styles.taskText}
-                            ref={textInputRef}
-                        />
-                    </View>
+                <TextInput
+                    value={editedTitle}
+                    onChangeText={setEditedTitle}
+                    editable={editing}
+                    onSubmitEditing={handleSubmitEditing}
+                    style={task.done ? styles.taskTextDone : styles.taskText}
+                    ref={textInputRef}
+                    multiline
+                />
 
-                </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
 
             <View style={styles.icons}>
                 {
                     editing
-                        ? <TouchableOpacity
-                            onPress={handleCancelEditing}
-                        >
-                            <Icon
-                                name="x"
-                                size={24}
-                                color="#b2b2b2"
-                            />
+                        ? <TouchableOpacity onPress={handleCancelEditing}>
+                            <Icon name="x" size={24} color="#b2b2b2" />
                         </TouchableOpacity>
-                        :
-                        <TouchableOpacity
-                            onPress={handleStartEditing}
-                        >
+
+                        : <TouchableOpacity onPress={handleStartEditing}>
                             <Image source={editIcon} />
                         </TouchableOpacity>
                 }
 
                 <View style={styles.iconDivider} />
 
-                <TouchableOpacity
-                    onPress={handleRemoveTask}
-                    disabled={editing}
-                >
+                <TouchableOpacity onPress={handleRemoveTask} disabled={editing}>
                     <Image source={trashIcon} style={{ opacity: editing ? 0.2 : 1 }} />
                 </TouchableOpacity>
             </View>
-        </>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
     taskButton: {
         flex: 1,
         paddingHorizontal: 24,
