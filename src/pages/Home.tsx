@@ -26,28 +26,18 @@ export function Home() {
   }
 
   function handleToggleTaskDone(id: number) {
-    const updatedTasks = tasks.map(task =>
-      task.id === id
-        ? {
-          id: task.id,
-          title: task.title,
-          done: !task.done
-        } as Task
-        : task
-    );
+    const updatedTasks = tasks.map(task => {
+      if (task.id === id) task.done = !task.done;
+      return task;
+    });
     setTasks(updatedTasks);
   }
 
   function handleEditTask(id: number, taskNewTitle: string) {
-    const updatedTasks = tasks.map(task =>
-      task.id === id
-        ? {
-          id: task.id,
-          title: taskNewTitle,
-          done: task.done
-        } as Task
-        : task
-    );
+    const updatedTasks = tasks.map(task => {
+      if (task.id === id) task.title = taskNewTitle;
+      return task;
+    });
     setTasks(updatedTasks);
   }
 
